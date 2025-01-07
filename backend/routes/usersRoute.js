@@ -1,10 +1,24 @@
 import express from "express";
 import { User } from "../models/userModel.js";
+import multer from "multer";
+import path from "path";
 
 const router = express.Router();
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    );
+  },
+});
+const upload = multer({ storage });
 // Create a new house
-router.post("/", async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
   try {
     if (
       !req.body.userId ||
@@ -23,6 +37,7 @@ router.post("/", async (req, res) => {
     const newHouse = {
       userId: req.body.userId,
       title: req.body.title,
+      images: req.file.filename,
       price: req.body.price,
       location: req.body.location,
       carPort: req.body.carPort,

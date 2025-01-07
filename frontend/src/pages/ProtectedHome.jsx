@@ -1,9 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
 import { Link } from "react-router";
-import { useUser } from "@clerk/react-router";
 import {
   ClerkProvider,
   SignedIn,
@@ -12,13 +10,12 @@ import {
   UserButton,
 } from "@clerk/react-router";
 
-const ProtectedHome = () => {
+const ProtectedPage = () => {
   const [houses, setHouses] = useState("");
-  const user = useUser();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/houses/${user?.id}`)
+      .get("http://localhost:3000/houses")
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -32,6 +29,9 @@ const ProtectedHome = () => {
     <div>
       <h1>Protected Houses</h1>
       <UserButton />
+      <Link to="/houses/create">
+        <button>Add House</button>
+      </Link>
       {Array.isArray(houses) && houses.length > 0 ? (
         houses.map((house) => (
           <div
@@ -76,4 +76,4 @@ const ProtectedHome = () => {
   );
 };
 
-export default ProtectedHome;
+export default ProtectedPage;

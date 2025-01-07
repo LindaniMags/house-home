@@ -27,7 +27,8 @@ const ProtectedPage = () => {
 
   return (
     <div>
-      <h1>Houses</h1>
+      <h1>Protected Houses</h1>
+      <UserButton />
       <Link to="/houses/create">
         <button>Add House</button>
       </Link>

@@ -29,6 +29,9 @@ const Home = () => {
   return (
     <div>
       <h1>Houses</h1>
+      <Link to="/houses/create">
+        <button>Add House</button>
+      </Link>
       <SignInButton forceRedirectUrl={"/protected"} />
       {Array.isArray(houses) && houses.length > 0 ? (
         houses.map((house) => (
