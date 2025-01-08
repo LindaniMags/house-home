@@ -17,6 +17,11 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+router.post("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file);
+});
+
 // Create a new house
 router.post("/", upload.single("file"), async (req, res) => {
   try {
