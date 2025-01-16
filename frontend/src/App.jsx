@@ -11,7 +11,7 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-} from "@clerk/react-router";
+} from "@clerk/clerk-react";
 import ProtectedPage from "./pages/ProtectedPage";
 import ProtectedHome from "./pages/ProtectedHome";
 

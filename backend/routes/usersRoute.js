@@ -18,12 +18,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.post("/upload", upload.single("file"), (req, res) => {
+router.post("/upload", upload.array("files", 3), (req, res) => {
   console.log(req.file);
 });
 
 // Create a new house
-router.post("/", upload.single("file"), async (req, res) => {
+router.post("/", upload.array("files", 3), async (req, res) => {
   try {
     if (
       !req.body.userId ||
@@ -42,7 +42,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     const newHouse = {
       userId: req.body.userId,
       title: req.body.title,
-      images: req.file.filename,
+      images: req.files.map((file) => file.filename),
       price: req.body.price,
       location: req.body.location,
       carPort: req.body.carPort,
@@ -52,6 +52,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       offer: req.body.offer,
     };
     const house = await User.create(newHouse);
+    console.log(req.files);
     return res.status(201).send(house);
   } catch (error) {
     console.log(error);

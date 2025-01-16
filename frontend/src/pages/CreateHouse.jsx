@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useUser } from "@clerk/react-router";
+import { useUser } from "@clerk/clerk-react";
 
 const CreateHouse = () => {
   const user = useUser();
@@ -16,22 +16,26 @@ const CreateHouse = () => {
     bathrooms: "",
     description: "",
     offer: "",
-    userId: "1",
-    file: null,
+    userId: "",
+    files: [],
   });
+
+  if (!user) {
+    console.log("User not found");
+  }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, file: e.target.files[0] });
+    setFormData({ ...formData, files: e.target.files });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("file", formData.file);
+
     data.append("title", formData.title);
     data.append("price", formData.price);
     data.append("location", formData.location);
@@ -40,7 +44,12 @@ const CreateHouse = () => {
     data.append("bathrooms", formData.bathrooms);
     data.append("description", formData.description);
     data.append("offer", formData.offer);
-    data.append("userId", user.id);
+    data.append("userId", formData.user.id);
+
+    for (let i = 0; i < formData.files.length; i++) {
+      data.append("files", formData.files[i]);
+    }
+
     try {
       await axios.post("http://localhost:3000/houses", data);
       navigate("/");
@@ -51,42 +60,17 @@ const CreateHouse = () => {
 
   const navigate = useNavigate();
 
-  const handleSub = async (e) => {
-    e.preventDefault();
-    const newHouse = {
-      title,
-      userId,
-      file,
-      price,
-      location,
-      carPort,
-      bedrooms,
-      bathrooms,
-      description,
-      offer,
-    };
-
-    try {
-      await axios.post("http://localhost:3000/houses", newHouse);
-      navigate("/");
-    } catch (error) {
-      alert("Error creating house");
-      console.log(error);
-    }
-  };
-  const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("file", file);
-    axios.post("http://localhost:3000/houses/upload", formData);
-    console.log(file);
-  };
-
   return (
     <div>
-      <form onSubmit={handleSubmit} method="post">
+      <form onSubmit={handleSubmit} encType="multipart/form-data" method="post">
         <div>
           <label>Upload Image:</label>
-          <input type="file" name="file" onChange={handleFileChange} />
+          <input
+            type="file"
+            name="files"
+            multiple
+            onChange={handleFileChange}
+          />
         </div>
         <div>
           <label>Title:</label>

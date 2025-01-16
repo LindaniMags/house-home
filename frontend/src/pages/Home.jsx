@@ -9,7 +9,7 @@ import {
   SignInButton,
   UserButton,
   SignIn,
-} from "@clerk/react-router";
+} from "@clerk/clerk-react";
 
 const Home = () => {
   const [houses, setHouses] = useState("");
@@ -43,6 +43,14 @@ const Home = () => {
               padding: "10px",
             }}
           >
+            <div>
+              {house.images.map((image) => (
+                <img
+                  src={`http://localhost:3000/public/images/${image}`}
+                  alt={house.title}
+                />
+              ))}
+            </div>
             <p>
               <strong>Title: </strong>
               {house.title}

@@ -8,7 +8,7 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-} from "@clerk/react-router";
+} from "@clerk/clerk-react";
 
 const ProtectedPage = () => {
   const [houses, setHouses] = useState("");
