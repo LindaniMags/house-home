@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 
 const EditHouse = () => {
-  const [userId, setUserId] = useState("1");
+  const [userId, setUserId] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");

@@ -8,14 +8,17 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
+  SignIn,
+  useUser,
 } from "@clerk/clerk-react";
 
 const ProtectedPage = () => {
   const [houses, setHouses] = useState("");
+  const { user, isSignedIn } = useUser();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/houses")
+      .get("http://localhost:3000/houses/dashboard/" + user?.id)
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -27,11 +30,11 @@ const ProtectedPage = () => {
 
   return (
     <div>
-      <h1>Protected Houses</h1>
-      <UserButton />
+      <h1>Houses</h1>
       <Link to="/houses/create">
         <button>Add House</button>
       </Link>
+      <SignInButton />
       {Array.isArray(houses) && houses.length > 0 ? (
         houses.map((house) => (
           <div
@@ -42,6 +45,14 @@ const ProtectedPage = () => {
               padding: "10px",
             }}
           >
+            <div>
+              {house.images.map((image) => (
+                <img
+                  src={`http://localhost:3000/public/images/${image}`}
+                  alt={house.title}
+                />
+              ))}
+            </div>
             <p>
               <strong>Title: </strong>
               {house.title}

@@ -2,9 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import splash from "/images/splash.jpg";
-import splash1 from "/images/splash1.jpg";
-import splash2 from "/images/splash2.jpeg";
+
 import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
@@ -18,15 +16,14 @@ import {
   SignIn,
   useUser,
 } from "@clerk/clerk-react";
-import Navbar from "./Navbar";
 
-const Home = () => {
+const Dashboard = () => {
   const [houses, setHouses] = useState("");
   const { user, isSignedIn } = useUser();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/houses")
+      .get("http://localhost:3000/houses/dashboard/" + user?.id)
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -38,47 +35,21 @@ const Home = () => {
 
   return (
     <div>
-      <div
-        style={{
-          height: "37rem",
-          overflow: "hidden",
-          backgroundImage: `url(${splash})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          repeat: "no-repeat",
-          zIndex: "-1",
-        }}
-      >
-        <div>
-          <div className="flex  justify-between items-center p-4">
-            <Link to="/">
-              <h2 className="text-xl font-medium border rounded text-white h-10 p-1 px-5">
-                House & Home
-              </h2>
+      <div className="shadow-xl">
+        <div className="flex  justify-between items-center p-4">
+          <Link to="/">
+            <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
+              House & Home
+            </h2>
+          </Link>
+          <div className="flex gap-3">
+            <Link to={`/houses/create`}>
+              <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+                Create Listing
+              </button>
             </Link>
-            <div className="flex gap-3">
-              <Link to={`/houses/dashboard/${user?.id}`}>
-                <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
-                  Dashboard
-                </button>
-              </Link>
-              <UserButton />
-            </div>
+            <UserButton />
           </div>
-        </div>
-
-        <div className="text-white flex flex-col justify-center items-center mt-32 mb-6 gap-4">
-          <h1 className="text-4xl font-bold">House & Home</h1>
-          <p className="text-xl font-medium">Welcome To Your Peace of Mind</p>
-        </div>
-        <div className="flex justify-self-center  bg-white h-12 p-1 rounded items-center gap-1">
-          <div className="flex items-center border-solid border border-slate-200 w-52 md:w-96 gap-2 p-1 rounded h-10">
-            <IoIosSearch className="text-slate-400" />
-            <input type="text" placeholder="Enter a location" className="" />
-          </div>
-          <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
-            Search
-          </button>
         </div>
       </div>
       <h1>Houses</h1>
@@ -97,11 +68,13 @@ const Home = () => {
             >
               <h3>{house.offer}</h3>
               <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
-                <img
-                  src={`http://localhost:3000/public/images/${house.images[0]}`}
-                  alt={house.title}
-                  className="w-full, h-auto"
-                />
+                {house.images.map((image) => (
+                  <img
+                    src={`http://localhost:3000/public/images/${image}`}
+                    alt={house.title}
+                    className="w-full, h-auto"
+                  />
+                ))}
               </div>
               <p>
                 <strong>Price: </strong>
@@ -131,8 +104,18 @@ const Home = () => {
                   </div>
                 </div>
                 <Link to={`/houses/details/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
                     Info
+                  </button>
+                </Link>
+                <Link to={`/houses/edit/${house._id}`}>
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
+                    Edit
+                  </button>
+                </Link>
+                <Link to={`/houses/delete/${house._id}`}>
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
+                    Delete
                   </button>
                 </Link>
               </div>
@@ -146,4 +129,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

@@ -85,6 +85,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/dashboard/:id", async (req, res) => {
+  try {
+    const houses = await User.find({ userId: req.params.id });
+    if (houses) {
+      return res.status(200).send({ count: houses.length, data: houses });
+    }
+    return res.status(404).send({ message: "House not found" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 // Update a house by ID
 router.put("/:id", async (req, res) => {
   try {
