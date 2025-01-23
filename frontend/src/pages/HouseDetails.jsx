@@ -35,7 +35,7 @@ const HouseDetails = () => {
 
   return (
     <div>
-      <div className="shadow-xl">
+      <div className="shadow-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
         <div className="flex  justify-between items-center p-4 m-1">
           <Link to="/">
             <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
@@ -91,7 +91,7 @@ const HouseDetails = () => {
                     {house.price}
                   </p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
                   <div className="flex gap-3">
                     <div className="flex gap-1 items-center">
                       <IoBedOutline />
@@ -110,7 +110,7 @@ const HouseDetails = () => {
 
                 <p>{house.description}</p>
               </div>
-              <div className="contacts">
+              <div className="contacts font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
                 <p>Name: Bee</p>
                 <p>Email: bee@email.com</p>
                 <p>Cell: 76123 4567</p>
