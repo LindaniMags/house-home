@@ -36,13 +36,13 @@ const HouseDetails = () => {
   return (
     <div>
       <div className="shadow-xl">
-        <div className="flex  justify-between items-center p-4">
+        <div className="flex  justify-between items-center p-4 m-1">
           <Link to="/">
             <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
               House & Home
             </h2>
           </Link>
-          <div className="flex gap-3">
+          <div className="flex gap-3 ">
             {isSignedIn ? (
               <>
                 <Link to={`/houses/dashboard/${user?.id}`}>
