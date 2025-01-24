@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
 const Search = () => {
@@ -8,7 +8,34 @@ const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get("searchTerm");
 
-  console.log(searchTerm);
+  //  console.log(searchTerm);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/houses/get?searchTerm=${searchTerm}`
+        );
+        setListings(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchListings();
+  }, []);
+  console.log(listings);
+  //  useEffect(() => {
+  //    axios
+  //      .get(`http://localhost:3000/houses/get?${searchTerm}`)
+  //      .then((response) => {
+  //        setHouses(response.data.data);
+  //      })
+  //      .catch((error) => {
+  //        console.log(error);
+  //      });
+  //    console.log(houses);
+  //  }, []);
 
   return (
     <div>
