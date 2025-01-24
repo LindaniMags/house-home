@@ -35,7 +35,7 @@ const HouseDetails = () => {
 
   return (
     <div>
-      <div className="shadow-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
+      <div className="shadow-xl">
         <div className="flex  justify-between items-center p-4 m-1">
           <Link to="/">
             <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
@@ -58,12 +58,12 @@ const HouseDetails = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4 p-4">
+      <div className="flex flex-col items-center gap-4 p-4 ">
         {loading ? (
           <div>Loading...</div>
         ) : house ? (
           <div className="w-5/6 max-w-6xl">
-            <div className="flex justify-center items-center max-h-80 overflow-hidden">
+            <div className="flex justify-center items-center max-h-80 overflow-hidden mb-11">
               <img
                 src={
                   house.images && house.images.length > 0
@@ -75,7 +75,7 @@ const HouseDetails = () => {
               />
             </div>
 
-            <div className="text-con flex justify-between">
+            <div className="text-con gap-6 flex justify-between">
               <div className="describe-con w-full max-w-xl">
                 <div className="flex  justify-between">
                   <div>
@@ -91,7 +91,7 @@ const HouseDetails = () => {
                     {house.price}
                   </p>
                 </div>
-                <div className="flex justify-between font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
+                <div className="flex justify-between">
                   <div className="flex gap-3">
                     <div className="flex gap-1 items-center">
                       <IoBedOutline />
@@ -110,11 +110,23 @@ const HouseDetails = () => {
 
                 <p>{house.description}</p>
               </div>
-              <div className="contacts font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
-                <p>Name: Bee</p>
-                <p>Email: bee@email.com</p>
-                <p>Cell: 76123 4567</p>
-                <p>Whatsapp: 76123 4567</p>
+              <div className="contacts w-full  max-w-sm h-fit p-6 border border-green-200 rounded-xl flex flex-col justify-center shadow-2xl">
+                <div className="flex flex-col items-center">
+                  <p>Bee</p>
+                  <p>Nyosi</p>
+                </div>
+                <div className="email flex justify-between gap-2 py-2">
+                  <p>Email</p>
+                  <p>bee@email.com</p>
+                </div>
+                <div className="email flex justify-between gap-2 py-2 border-y border-green-200">
+                  <p>Whatsapp</p>
+                  <p>76123 4567</p>
+                </div>
+                <div className="email flex justify-between gap-2 py-2">
+                  <p>Cell</p>
+                  <p>76123 4567</p>
+                </div>
               </div>
             </div>
           </div>
