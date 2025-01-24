@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import splash from "/images/splash.jpg";
 import splash1 from "/images/splash1.jpg";
 import splash2 from "/images/splash2.jpeg";
@@ -23,6 +23,9 @@ import Navbar from "./Navbar";
 const Home = () => {
   const [houses, setHouses] = useState("");
   const { user, isSignedIn } = useUser();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -35,6 +38,18 @@ const Home = () => {
       });
     console.log(houses);
   }, []);
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("searchTerm", searchTerm);
+
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+
+    console.log(searchTerm);
+  };
 
   return (
     <div>
@@ -71,15 +86,27 @@ const Home = () => {
           <h1 className="text-4xl font-bold">House & Home</h1>
           <p className="text-xl font-medium">Welcome To Your Peace of Mind</p>
         </div>
-        <div className="flex justify-self-center  bg-white h-12 p-1 rounded items-center gap-1">
+        <form
+          onSubmit={searchHandler}
+          className="flex justify-self-center  bg-white h-12 p-1 rounded items-center gap-1"
+        >
           <div className="flex items-center border-solid border border-slate-200 w-52 md:w-96 gap-2 p-1 rounded h-10">
             <IoIosSearch className="text-slate-400" />
-            <input type="text" placeholder="Enter a location" className="" />
+            <input
+              type="text"
+              name="searchTerm"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              placeholder="Enter a location"
+              className=""
+            />
           </div>
           <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
             Search
           </button>
-        </div>
+        </form>
       </div>
       <h1>Houses</h1>
       <div className="flex flex-wrap">

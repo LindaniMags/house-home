@@ -71,6 +71,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/get", async (req, res) => {
+  try {
+    const searchTerm = req.query.searchTerm || "";
+
+    const listings = await User.find({
+      location: { $regex: searchTerm, $options: "i" },
+    });
+    console.log(listings);
+
+    return res.status(200).json(listings);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 // Get a house by ID
 router.get("/:id", async (req, res) => {
   try {

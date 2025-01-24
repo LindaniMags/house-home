@@ -12,6 +12,7 @@ import DeleteHouse from "./pages/DeleteHouse";
 import ProtectedHome from "./pages/ProtectedHome";
 import ProtectedPage from "./pages/ProtectedPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Search from "./pages/Search.jsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/houses/edit/:id" element={<EditHouse />} />
           <Route path="/houses/delete/:id" element={<DeleteHouse />} />
           <Route path="/info" element={<ProtectedPage />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/houses/dashboard/:id" element={<Dashboard />} />
         </Routes>
       </ClerkProvider>
