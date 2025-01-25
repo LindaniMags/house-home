@@ -101,7 +101,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex gap-1 items-center">
                     <IoCarSportOutline />
-                    {house.garage} 2
+                    {house.carPort}
                   </div>
                 </div>
                 <Link to={`/houses/details/${house._id}`}>
