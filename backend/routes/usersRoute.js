@@ -73,10 +73,10 @@ router.get("/", async (req, res) => {
 
 router.get("/get", async (req, res) => {
   try {
-    const searchTerm = req.query.searchTerm || "Spiki";
+    const searchTerm = req.query.searchTerm || "";
 
     const listings = await User.find({
-      location: searchTerm,
+      location: { $regex: searchTerm, $options: "i" },
     });
     console.log(listings);
 
