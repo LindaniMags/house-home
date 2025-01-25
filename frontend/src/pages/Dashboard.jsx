@@ -57,7 +57,7 @@ const Dashboard = () => {
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
             <div
-              key={house.id || house.title}
+              key={house._id || house.title}
               style={{
                 border: "1px solid aqua",
                 margin: "10px",
@@ -73,6 +73,7 @@ const Dashboard = () => {
                     src={`http://localhost:3000/public/images/${image}`}
                     alt={house.title}
                     className="w-full, h-auto"
+                    key={image}
                   />
                 ))}
               </div>

@@ -39,8 +39,19 @@ const Search = () => {
 
   return (
     <div>
-      Search
-      <h1>{searchTerm}</h1>
+      <h1>Search Results</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {listings.map((listing) => (
+            <div key={listing._id}>
+              <h2>{listing.title}</h2>
+              <p>{listing.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
