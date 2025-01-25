@@ -21,7 +21,7 @@ const DeleteHouse = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-300">
+    <div className="flex justify-center items-center h-screen bg-neutral-400 backdrop-blur-xs backdrop-grayscale">
       <div className="flex flex-col gap-5 items-center p-14 bg-white shadow-2xl rounded-xl">
         <h1 className="text-3xl font-bold text-center">
           Are you sure you want to delete this house?

@@ -122,7 +122,7 @@ const Home = () => {
               }}
               className="shadow-xl"
             >
-              <h3>{house.offer}</h3>
+              <h3 className="text-sm font-semibold">{house.offer}</h3>
               <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
@@ -130,18 +130,9 @@ const Home = () => {
                   className="w-full, h-auto"
                 />
               </div>
-              <p>
-                <strong>Price: </strong>
-                {house.price}
-              </p>
-              <p>
-                <strong>Title: </strong>
-                {house.title}
-              </p>
-              <p>
-                <strong>Location: </strong>
-                {house.location}
-              </p>
+              <p className=" font-medium text-right">E{house.price}</p>
+              <p className="text-lg font-medium ">{house.title}</p>
+              <p className=" text-gray-600 font-medium">{house.location}</p>
               <div className="flex justify-between">
                 <div className="flex gap-3">
                   <div className="flex gap-1 items-center">

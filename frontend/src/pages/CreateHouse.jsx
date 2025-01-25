@@ -161,7 +161,7 @@ const CreateHouse = () => {
                 <div className="flex justify-between border-b border-slate-400 py-2 mt-6">
                   <label>Car Port:</label>
                   <input
-                    type="text"
+                    type="number"
                     name="carPort"
                     value={formData.carPort}
                     onChange={handleChange}
