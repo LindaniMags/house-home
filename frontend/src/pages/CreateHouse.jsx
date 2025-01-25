@@ -96,103 +96,150 @@ const CreateHouse = () => {
           method="post"
           className="  rounded p-4 shadow-2xl"
         >
-          <div className="flex gap-4">
-            <div className="flex flex-col  flex-grow">
-              <label>Title:</label>
+          <div className="forms-con flex gap-6">
+            <div className="house-form-con border-r border-slate-100 pr-6">
+              <h1>Listing</h1>
+              <div className="flex gap-4">
+                <div className="flex flex-col  flex-grow">
+                  <label>Title:</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    className="border rounded p-2 border-slate-400 max-w-md"
+                  />
+                </div>
+
+                <div className="flex flex-col  flex-grow">
+                  <label>Location:</label>
+                  <input
+                    type="text"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    className="border rounded p-2 border-slate-400 max-w-md"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex flex-col  flex-grow">
+                  <label>Price:</label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
+                    className="border rounded p-2 border-slate-400 max-w-md"
+                  />
+                </div>
+
+                <div className="flex flex-col  flex-grow">
+                  <label>Offer:</label>
+                  <input
+                    type="text"
+                    name="offer"
+                    value={formData.offer}
+                    onChange={handleChange}
+                    className="border border-slate-400 max-w-md rounded p-2"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center ">
+                <div className="flex justify-between border-b border-slate-400 py-2 mt-6">
+                  <label>Car Port:</label>
+                  <input
+                    type="text"
+                    name="carPort"
+                    value={formData.carPort}
+                    onChange={handleChange}
+                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                  />
+                </div>
+                <div className=" flex justify-between border-b border-slate-400 py-2">
+                  <label>Bedrooms:</label>
+                  <input
+                    type="number"
+                    name="bedrooms"
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                  />
+                </div>
+                <div className=" flex justify-between border-b border-slate-400 py-2">
+                  <label>Bathrooms:</label>
+                  <input
+                    type="number"
+                    name="bathrooms"
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col my-10">
+                <label>Description:</label>
+                <textarea
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="border border-slate-400 rounded p-2"
+                />
+              </div>
+              <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
+                <label>Upload Images:</label>
+                <input
+                  type="file"
+                  name="files"
+                  multiple
+                  onChange={handleFileChange}
+                />
+              </div>
+            </div>
+            <div className="agent-form-con flex flex-col gap-6">
+              <h1>Agent</h1>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
+                placeholder="Full Name"
+                onChange={handleChange}
+                className="border rounded p-2 border-slate-400 max-w-md"
+              />
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                placeholder="Company Name"
+                onChange={handleChange}
+                className="border rounded p-2 border-slate-400 max-w-md"
+              />
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                placeholder="Email Address"
+                onChange={handleChange}
+                className="border rounded p-2 border-slate-400 max-w-md"
+              />
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                placeholder="Phone Number"
+                onChange={handleChange}
+                className="border rounded p-2 border-slate-400 max-w-md"
+              />
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                placeholder="WhatsApp Number"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
               />
             </div>
-
-            <div className="flex flex-col  flex-grow">
-              <label>Location:</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className="border rounded p-2 border-slate-400 max-w-md"
-              />
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <div className="flex flex-col  flex-grow">
-              <label>Price:</label>
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                className="border rounded p-2 border-slate-400 max-w-md"
-              />
-            </div>
-
-            <div className="flex flex-col  flex-grow">
-              <label>Offer:</label>
-              <input
-                type="text"
-                name="offer"
-                value={formData.offer}
-                onChange={handleChange}
-                className="border border-slate-400 max-w-md rounded p-2"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col justify-center ">
-            <div className="flex justify-between border-b border-slate-400 py-2 mt-6">
-              <label>Car Port:</label>
-              <input
-                type="text"
-                name="carPort"
-                value={formData.carPort}
-                onChange={handleChange}
-                className="w-10 border-b	border-slate-400 rounded p-0.5"
-              />
-            </div>
-            <div className=" flex justify-between border-b border-slate-400 py-2">
-              <label>Bedrooms:</label>
-              <input
-                type="number"
-                name="bedrooms"
-                value={formData.bedrooms}
-                onChange={handleChange}
-                className="w-10 border-b	border-slate-400 rounded p-0.5"
-              />
-            </div>
-            <div className=" flex justify-between border-b border-slate-400 py-2">
-              <label>Bathrooms:</label>
-              <input
-                type="number"
-                name="bathrooms"
-                value={formData.bathrooms}
-                onChange={handleChange}
-                className="w-10 border-b	border-slate-400 rounded p-0.5"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col my-10">
-            <label>Description:</label>
-            <textarea
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="border border-slate-400 rounded p-2"
-            />
-          </div>
-
-          <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
-            <label>Upload Images:</label>
-            <input
-              type="file"
-              name="files"
-              multiple
-              onChange={handleFileChange}
-            />
           </div>
           <button
             type="submit"
