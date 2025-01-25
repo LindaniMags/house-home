@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   carPort: {
-    type: String,
+    type: Number,
     required: true,
   },
   bedrooms: {
@@ -40,6 +40,26 @@ const userSchema = mongoose.Schema({
   offer: {
     type: String,
     required: true,
+  },
+  name: {
+    type: String,
+    required: false,
+  },
+  company: {
+    type: String,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
+  },
+  phone: {
+    type: Number,
+    required: false,
+  },
+  whatsapp: {
+    type: Number,
+    required: false,
   },
 });
 

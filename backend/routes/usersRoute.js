@@ -50,6 +50,11 @@ router.post("/", upload.array("files", 3), async (req, res) => {
       bathrooms: req.body.bathrooms,
       description: req.body.description,
       offer: req.body.offer,
+      name: req.body.name,
+      company: req.body.company,
+      email: req.body.email,
+      phone: req.body.phone,
+      whatsapp: req.body.whatsapp,
     };
     const house = await User.create(newHouse);
     console.log(req.files);

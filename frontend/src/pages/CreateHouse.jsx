@@ -19,6 +19,12 @@ const CreateHouse = () => {
     offer: "",
     userId: "",
     files: [],
+
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    whatsapp: "",
   });
 
   if (!user) {
@@ -55,6 +61,12 @@ const CreateHouse = () => {
     data.append("description", formData.description);
     data.append("offer", formData.offer);
     data.append("userId", formData.userId);
+
+    data.append("name", formData.name);
+    data.append("company", formData.company);
+    data.append("email", formData.email);
+    data.append("phone", formData.phone);
+    data.append("whatsapp", formData.whatsapp);
 
     for (let i = 0; i < formData.files.length; i++) {
       data.append("files", formData.files[i]);
@@ -201,40 +213,40 @@ const CreateHouse = () => {
               <h1>Agent</h1>
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="name"
+                value={formData.name}
                 placeholder="Full Name"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
               />
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="company"
+                value={formData.company}
                 placeholder="Company Name"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
               />
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="email"
+                value={formData.email}
                 placeholder="Email Address"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
               />
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="phone"
+                value={formData.phone}
                 placeholder="Phone Number"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
               />
               <input
                 type="text"
-                name="title"
-                value={formData.title}
+                name="whatsapp"
+                value={formData.whatsapp}
                 placeholder="WhatsApp Number"
                 onChange={handleChange}
                 className="border rounded p-2 border-slate-400 max-w-md"
