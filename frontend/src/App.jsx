@@ -13,8 +13,6 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import ProtectedHome from "./pages/ProtectedHome";
-import ProtectedPage from "./pages/ProtectedPage";
-
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const App = () => {

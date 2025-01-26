@@ -122,7 +122,9 @@ const Home = () => {
               }}
               className="shadow-xl border border-neutral-200"
             >
-              <h3 className="text-sm font-semibold">{house.offer}</h3>
+              <h3 className="text-sm font-semibold bg-neutral-400 text-white px-1 rounded w-fit mb-1">
+                {house.offer}
+              </h3>
               <div className="max-w-xs overflow-hidden h-52 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
