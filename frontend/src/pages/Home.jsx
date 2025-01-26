@@ -20,6 +20,7 @@ import {
 } from "@clerk/clerk-react";
 import Navbar from "./Navbar";
 import Search from "./Search";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [houses, setHouses] = useState("");
@@ -85,51 +86,43 @@ const Home = () => {
                 setSearchTerm(e.target.value);
               }}
               placeholder="Enter a location"
-              className=""
+              className=" w-full outline-none"
             />
           </div>
           <button
             type="submit"
-            className="bg-green-600 text-white rounded h-10 p-1 px-5"
+            className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold"
           >
             Search
           </button>
         </form>
       </div>
-      <h1>Houses</h1>
-      <div className="flex flex-wrap">
+      <h1 className="ml-2 text-lg font-medium my-3">Houses</h1>
+      <div className="flex flex-wrap justify-center">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
             <div
               key={house.id || house.title}
               style={{
-                border: "1px solid aqua",
-                margin: "10px",
+                margin: "7px",
                 padding: "10px",
-                width: "fit-content",
+                width: "320px",
               }}
-              className="shadow-xl"
+              className="shadow-xl border border-neutral-200"
             >
-              <h3>{house.offer}</h3>
-              <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
+              <h3 className="text-sm font-semibold bg-neutral-400 text-white px-1 rounded w-fit mb-1">
+                {house.offer}
+              </h3>
+              <div className="max-w-xs overflow-hidden h-52 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
                   alt={house.title}
-                  className="w-full, h-auto"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <p>
-                <strong>Price: </strong>
-                {house.price}
-              </p>
-              <p>
-                <strong>Title: </strong>
-                {house.title}
-              </p>
-              <p>
-                <strong>Location: </strong>
-                {house.location}
-              </p>
+              <p className=" font-medium text-right">E{house.price}</p>
+              <p className="text-lg font-medium ">{house.title}</p>
+              <p className=" text-gray-600 font-medium">{house.location}</p>
               <div className="flex justify-between">
                 <div className="flex gap-3">
                   <div className="flex gap-1 items-center">
@@ -146,7 +139,7 @@ const Home = () => {
                   </div>
                 </div>
                 <Link to={`/houses/details/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
                     Info
                   </button>
                 </Link>
@@ -157,6 +150,7 @@ const Home = () => {
           <p>Loading houses...</p>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

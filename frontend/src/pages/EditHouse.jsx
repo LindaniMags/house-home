@@ -94,7 +94,7 @@ const EditHouse = () => {
           </Link>
           <div className="flex gap-3">
             <Link to={`/houses/dashboard/${user.user?.id}`}>
-              <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+              <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
                 Dashboard
               </button>
             </Link>
@@ -111,7 +111,9 @@ const EditHouse = () => {
         >
           <div className="forms-con flex gap-6">
             <div className="house-form-con border-r border-slate-100 pr-6">
-              <h1>House Details</h1>
+              <h1 className=" font-semibold border-b border-neutral-200 w-fit mb-2">
+                Listing Details
+              </h1>
               <div className="flex gap-4">
                 <div className="flex flex-col  flex-grow">
                   <label>Title:</label>
@@ -206,7 +208,9 @@ const EditHouse = () => {
               </div>
             </div>
             <div className="agent-form-con flex flex-col gap-6">
-              <h1>Agent</h1>
+              <h1 className=" font-semibold border-b border-neutral-200 w-fit mb-2">
+                Agent Details
+              </h1>
               <input
                 type="text"
                 name="name"
@@ -252,7 +256,7 @@ const EditHouse = () => {
 
           <button
             type="submit"
-            className="bg-green-600 text-white rounded h-10 p-1 px-5"
+            className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold"
           >
             Update Listing
           </button>

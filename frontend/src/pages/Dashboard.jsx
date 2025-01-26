@@ -44,7 +44,7 @@ const Dashboard = () => {
           </Link>
           <div className="flex gap-3">
             <Link to={`/houses/create`}>
-              <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+              <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
                 Create Listing
               </button>
             </Link>
@@ -75,18 +75,9 @@ const Dashboard = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p>
-                <strong>Price: </strong>
-                {house.price}
-              </p>
-              <p>
-                <strong>Title: </strong>
-                {house.title}
-              </p>
-              <p>
-                <strong>Location: </strong>
-                {house.location}
-              </p>
+              <p className="font-medium text-right">E{house.price}</p>
+              <p className="text-lg font-medium">{house.title}</p>
+              <p className=" text-gray-600 font-medium">{house.location}</p>
               <div className="flex justify-between">
                 <div className="flex gap-3">
                   <div className="flex gap-1 items-center">
@@ -103,17 +94,17 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <Link to={`/houses/details/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3 hover:bg-green-800 hover:font-semibold">
                     Info
                   </button>
                 </Link>
                 <Link to={`/houses/edit/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3 hover:bg-green-800 hover:font-semibold">
                     Edit
                   </button>
                 </Link>
                 <Link to={`/houses/delete/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-3">
+                  <button className="bg-red-500 text-white rounded h-10 p-1 px-3 hover:bg-red-800 hover:font-semibold">
                     Delete
                   </button>
                 </Link>

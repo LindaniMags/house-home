@@ -72,7 +72,7 @@ const Search = () => {
           </div>
         </div>
       </div>
-      <h1 className="ml-2 text-lg font-medium my-3">Search Results</h1>
+      <h1 className="ml-2 text-lg font-medium my-3">Search Results:</h1>
       <div className="flex flex-wrap justify-center">
         {loading ? (
           <p>Loading...</p>

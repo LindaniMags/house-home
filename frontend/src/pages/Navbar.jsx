@@ -12,7 +12,7 @@ const Navbar = () => {
           </h2>
         </Link>
 
-        <SignInButton className="bg-green-600 text-white rounded h-10 p-1 px-5" />
+        <SignInButton className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold" />
       </div>
     </div>
   );

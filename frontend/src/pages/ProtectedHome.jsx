@@ -74,7 +74,7 @@ const Home = () => {
             </Link>
             <div className="flex gap-3">
               <Link to={`/houses/dashboard/${user?.id}`}>
-                <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+                <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
                   Dashboard
                 </button>
               </Link>
@@ -104,7 +104,7 @@ const Home = () => {
               className=" w-full outline-none"
             />
           </div>
-          <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+          <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
             Search
           </button>
         </form>
@@ -151,7 +151,7 @@ const Home = () => {
                   </div>
                 </div>
                 <Link to={`/houses/details/${house._id}`}>
-                  <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+                  <button className="bg-green-600 text-white rounded h-10 p-1 px-5  hover:bg-green-800 hover:font-semibold">
                     Info
                   </button>
                 </Link>

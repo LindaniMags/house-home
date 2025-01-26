@@ -29,12 +29,12 @@ const DeleteHouse = () => {
         <div className="flex gap-5">
           <button
             onClick={handleDelete}
-            className="bg-red-500 text-white rounded h-10 p-1 px-5"
+            className="bg-red-500 text-white rounded h-10 p-1 px-5 hover:bg-red-800 hover:font-semibold"
           >
             Delete House
           </button>
           <Link to={`/houses/dashboard/${user?.id}`}>
-            <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
+            <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
               Cancel
             </button>
           </Link>
