@@ -59,23 +59,19 @@ const Dashboard = () => {
             <div
               key={house._id || house.title}
               style={{
-                border: "1px solid aqua",
                 margin: "10px",
                 padding: "10px",
                 width: "fit-content",
               }}
-              className="shadow-xl"
+              className="shadow-xl border border-neutral-200"
             >
               <h3>{house.offer}</h3>
               <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
-                {house.images.map((image) => (
-                  <img
-                    src={`http://localhost:3000/public/images/${image}`}
-                    alt={house.title}
-                    className="w-full, h-auto"
-                    key={image}
-                  />
-                ))}
+                <img
+                  src={`http://localhost:3000/public/images/${house.images[0]}`}
+                  alt={house.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <p>
                 <strong>Price: </strong>

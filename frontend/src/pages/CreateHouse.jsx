@@ -74,7 +74,7 @@ const CreateHouse = () => {
 
     try {
       await axios.post("http://localhost:3000/houses", data);
-      navigate("/");
+      navigate(`/houses/dashboard/${user?.user.id}`);
     } catch (error) {
       console.log(error);
     }

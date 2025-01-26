@@ -115,19 +115,18 @@ const Home = () => {
             <div
               key={house.id || house.title}
               style={{
-                border: "1px solid aqua",
                 margin: "10px",
                 padding: "10px",
                 width: "fit-content",
               }}
-              className="shadow-xl"
+              className="shadow-xl border border-neutral-200"
             >
               <h3 className="text-sm font-semibold">{house.offer}</h3>
               <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
                   alt={house.title}
-                  className="w-full, h-auto"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <p className=" font-medium text-right">E{house.price}</p>
