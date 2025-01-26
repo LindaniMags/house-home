@@ -101,7 +101,7 @@ const Home = () => {
                 setSearchTerm(e.target.value);
               }}
               placeholder="Enter a location"
-              className=""
+              className=" w-full outline-none"
             />
           </div>
           <button className="bg-green-600 text-white rounded h-10 p-1 px-5">

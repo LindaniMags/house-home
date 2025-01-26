@@ -10,6 +10,7 @@ import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import splash from "/images/splash.jpg";
+import Footer from "../components/Footer";
 
 const HouseDetails = () => {
   const { id } = useParams();
@@ -158,6 +159,7 @@ const HouseDetails = () => {
           <div>House not found</div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

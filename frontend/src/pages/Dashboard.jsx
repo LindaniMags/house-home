@@ -52,7 +52,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <h1>Houses</h1>
+      <h1 className="ml-2 text-lg font-medium my-3">My Dashboard</h1>
       <div className="flex flex-wrap">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
@@ -65,8 +65,10 @@ const Dashboard = () => {
               }}
               className="shadow-xl border border-neutral-200"
             >
-              <h3>{house.offer}</h3>
-              <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
+              <h3 className="text-sm font-semibold bg-neutral-400 text-white px-1 rounded w-fit mb-1">
+                {house.offer}
+              </h3>
+              <div className="max-w-xs overflow-hidden shadow-lg h-56 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
                   alt={house.title}
