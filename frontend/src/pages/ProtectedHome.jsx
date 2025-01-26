@@ -19,6 +19,7 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import Navbar from "./Navbar";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [houses, setHouses] = useState("");
@@ -108,21 +109,21 @@ const Home = () => {
           </button>
         </form>
       </div>
-      <h1>Houses</h1>
-      <div className="flex flex-wrap">
+      <h1 className="ml-2 text-lg font-medium my-3">Houses</h1>
+      <div className="flex flex-wrap justify-center">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
             <div
               key={house.id || house.title}
               style={{
-                margin: "10px",
+                margin: "7px",
                 padding: "10px",
-                width: "fit-content",
+                width: "320px",
               }}
               className="shadow-xl border border-neutral-200"
             >
               <h3 className="text-sm font-semibold">{house.offer}</h3>
-              <div className="max-w-xs rounded overflow-hidden shadow-lg h-56 flex items-center justify-center">
+              <div className="max-w-xs overflow-hidden h-52 flex items-center justify-center">
                 <img
                   src={`http://localhost:3000/public/images/${house.images[0]}`}
                   alt={house.title}
@@ -159,6 +160,7 @@ const Home = () => {
           <p>Loading houses...</p>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

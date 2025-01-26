@@ -59,9 +59,9 @@ const Dashboard = () => {
             <div
               key={house._id || house.title}
               style={{
-                margin: "10px",
+                margin: "7px",
                 padding: "10px",
-                width: "fit-content",
+                width: "320px",
               }}
               className="shadow-xl border border-neutral-200"
             >
