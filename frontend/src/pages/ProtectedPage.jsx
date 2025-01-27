@@ -2,15 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  SignIn,
-  useUser,
-} from "@clerk/clerk-react";
+import { SignInButton, useUser } from "@clerk/clerk-react";
 
 const ProtectedPage = () => {
   const [houses, setHouses] = useState("");

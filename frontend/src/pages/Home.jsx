@@ -3,23 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import splash from "/images/splash.jpg";
-import splash1 from "/images/splash1.jpg";
-import splash2 from "/images/splash2.jpeg";
 import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  SignIn,
-  useUser,
-} from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import Navbar from "./Navbar";
-import Search from "./Search";
 import Footer from "../components/Footer";
 
 const Home = () => {
@@ -29,6 +18,7 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  // Fetch all houses
   useEffect(() => {
     axios
       .get("http://localhost:3000/houses")
@@ -41,6 +31,10 @@ const Home = () => {
     console.log(houses);
   }, []);
 
+  /**
+   * Handles search form submission by creating a URL query string
+   * for the search term and navigating to the /search route.
+   */
   const searchHandler = (e) => {
     e.preventDefault();
 

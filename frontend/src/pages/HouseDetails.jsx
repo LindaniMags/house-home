@@ -4,20 +4,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router";
 import { UserButton, useUser, SignInButton } from "@clerk/clerk-react";
-
-import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
-import splash from "/images/splash.jpg";
 import Footer from "../components/Footer";
 
+//Get single house details
 const HouseDetails = () => {
   const { id } = useParams();
   const [house, setHouse] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user, isSignedIn } = useUser();
-
+  // fetch house details
   useEffect(() => {
     axios
       .get(`http://localhost:3000/houses/${id}`)

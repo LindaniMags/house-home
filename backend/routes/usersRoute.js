@@ -6,9 +6,16 @@ import path from "path";
 const router = express.Router();
 
 const storage = multer.diskStorage({
+  // This function is is used to specify the
+  // folder where Multer will store the uploaded file.
   destination: (req, file, cb) => {
     cb(null, "./public/images");
   },
+
+  /**
+   * This function is used to specify the
+   * filename of the uploaded file. The filename is a combination of the fieldname
+   */
   filename: (req, file, cb) => {
     cb(
       null,
@@ -76,6 +83,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Search for houses
 router.get("/get", async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
@@ -106,6 +114,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get all houses for a specific user
 router.get("/dashboard/:id", async (req, res) => {
   try {
     const houses = await User.find({ userId: req.params.id });

@@ -2,20 +2,15 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-
-import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  SignIn,
-  useUser,
-} from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
+
+/**
+ * Dashboard component fetches and displays a list of houses
+ * associated with the current signed-in user.
+ */
 
 const Dashboard = () => {
   const [houses, setHouses] = useState("");

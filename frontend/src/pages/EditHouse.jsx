@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
 import { UserButton, useUser } from "@clerk/clerk-react";
 
+// Edit a house
 const EditHouse = () => {
   const [userId, setUserId] = useState("");
   const [title, setTitle] = useState("");
@@ -26,6 +27,7 @@ const EditHouse = () => {
   const { id } = useParams();
   const user = useUser();
 
+  // Fetch house details
   useEffect(() => {
     axios
       .get(`http://localhost:3000/houses/${id}`)
@@ -52,10 +54,12 @@ const EditHouse = () => {
       });
   }, []);
 
+  // Update house details
   const handleFileChange = (e) => {
     setFormData({ ...formData, files: e.target.files });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newHouse = {

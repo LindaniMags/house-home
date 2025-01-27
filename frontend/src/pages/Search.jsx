@@ -2,23 +2,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Link, useNavigate } from "react-router";
-import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import Footer from "../components/Footer";
 import { UserButton, useUser, SignInButton } from "@clerk/clerk-react";
-import Navbar from "./Navbar";
 
 const Search = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get("searchTerm");
-  const navigate = useNavigate();
   const { user, isSignedIn } = useUser();
-
-  //  console.log(searchTerm);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -34,19 +29,6 @@ const Search = () => {
     };
     fetchListings();
   }, []);
-  console.log(listings);
-  //  useEffect(() => {
-  //    axios
-  //      .get(`http://localhost:3000/houses/get?${searchTerm}`)
-  //      .then((response) => {
-  //        setHouses(response.data.data);
-  //      })
-  //      .catch((error) => {
-  //        console.log(error);
-  //      });
-  //    console.log(houses);
-  //  }, []);
-
   return (
     <div>
       <div className="shadow-xl">

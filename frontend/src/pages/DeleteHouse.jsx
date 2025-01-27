@@ -1,13 +1,20 @@
 import React from "react";
 import { useParams, useNavigate, Link } from "react-router";
-import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
+/**
+ * This component is used to delete a house. It renders a confirmation dialog
+ * that asks the user if they are sure they want to delete the house
+ */
 const DeleteHouse = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUser();
+
+  /**
+   * Deletes a house using the house ID from the URL parameters.
+   */
 
   const handleDelete = async () => {
     try {

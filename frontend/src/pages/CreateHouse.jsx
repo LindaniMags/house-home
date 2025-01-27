@@ -5,6 +5,9 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { UserButton, useUser } from "@clerk/clerk-react";
 
+/**
+ * CreateHouse component renders a form for creating a new house listing.
+ */
 const CreateHouse = () => {
   const user = useUser();
 
@@ -44,9 +47,19 @@ const CreateHouse = () => {
     }
   }, []);
 
+  /**
+   * Handles changes to the file input field by updating the form data state
+   * with the newly selected files.
+   */
   const handleFileChange = (e) => {
     setFormData({ ...formData, files: e.target.files });
   };
+
+  /**
+   * Handles the submission of the house creation form.
+   * Prevents the default form submission behavior, constructs a FormData object
+   * with all form fields
+   */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
