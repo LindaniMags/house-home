@@ -5,12 +5,8 @@ import { Link } from "react-router";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
-import { UserButton, useUser } from "@clerk/clerk-react";
-
-/**
- * Dashboard component fetches and displays a list of houses
- * associated with the current signed-in user.
- */
+import { useUser } from "@clerk/clerk-react";
+import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 
 const Dashboard = () => {
   const [houses, setHouses] = useState("");
@@ -30,23 +26,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="shadow-xl">
-        <div className="flex  justify-between items-center p-4">
-          <Link to="/">
-            <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
-              House & Home
-            </h2>
-          </Link>
-          <div className="flex gap-3">
-            <Link to={`/houses/create`}>
-              <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
-                Create Listing
-              </button>
-            </Link>
-            <UserButton />
-          </div>
-        </div>
-      </div>
+      <AuthenticatedNavbar showCreateListing={true} />
       <h1 className="ml-2 text-lg font-medium my-3">My Dashboard</h1>
       <div className="flex flex-wrap">
         {Array.isArray(houses) && houses.length > 0 ? (

@@ -7,13 +7,16 @@ import { IoIosSearch } from "react-icons/io";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaBathSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
-import { UserButton, useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
+import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 import Footer from "../components/Footer";
 
 const Home = () => {
   const [houses, setHouses] = useState("");
   const { user, isSignedIn } = useUser();
   const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const navigate = useNavigate();
 
@@ -38,6 +41,8 @@ const Home = () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set("searchTerm", searchTerm);
+    if (minPrice) urlParams.set("minPrice", minPrice);
+    if (maxPrice) urlParams.set("maxPrice", maxPrice);
 
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
@@ -58,23 +63,7 @@ const Home = () => {
           zIndex: "-1",
         }}
       >
-        <div>
-          <div className="flex  justify-between items-center p-4">
-            <Link to="/">
-              <h2 className="text-xl font-medium border rounded text-white h-10 p-1 px-5">
-                House & Home
-              </h2>
-            </Link>
-            <div className="flex gap-3">
-              <Link to={`/houses/dashboard/${user?.id}`}>
-                <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
-                  Dashboard
-                </button>
-              </Link>
-              <UserButton />
-            </div>
-          </div>
-        </div>
+        <AuthenticatedNavbar />
 
         <div className="text-white flex flex-col justify-center items-center mt-32 mb-6 gap-4">
           <h1 className="text-4xl font-bold">House & Home</h1>
@@ -82,9 +71,9 @@ const Home = () => {
         </div>
         <form
           onSubmit={searchHandler}
-          className="flex justify-self-center  bg-white h-12 p-1 rounded items-center gap-1"
+          className="flex justify-self-center bg-white p-3 rounded items-center gap-3 flex-wrap mx-4 md:mx-auto md:max-w-fit"
         >
-          <div className="flex items-center border-solid border border-slate-200 w-52 md:w-96 gap-2 p-1 rounded h-10">
+          <div className="flex items-center border-solid border border-slate-200 w-full md:w-80 gap-2 p-1 rounded h-10">
             <IoIosSearch className="text-slate-400" />
             <input
               type="text"
@@ -97,7 +86,23 @@ const Home = () => {
               className=" w-full outline-none"
             />
           </div>
-          <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
+          <div className="flex gap-2 w-full sm:w-auto">
+            <input
+              type="number"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              placeholder="Min Price"
+              className="border border-slate-200 rounded h-10 p-2 w-full sm:w-28"
+            />
+            <input
+              type="number"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              placeholder="Max Price"
+              className="border border-slate-200 rounded h-10 p-2 w-full sm:w-28"
+            />
+          </div>
+          <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold w-full sm:w-auto">
             Search
           </button>
         </form>
@@ -107,7 +112,7 @@ const Home = () => {
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
             <div
-              key={house.id || house.title}
+              key={house._id || house.title}
               style={{
                 margin: "7px",
                 padding: "10px",

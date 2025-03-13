@@ -3,7 +3,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
-import { UserButton, useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
+import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 
 /**
  * CreateHouse component renders a form for creating a new house listing.
@@ -97,37 +98,21 @@ const CreateHouse = () => {
 
   return (
     <div>
-      <div className="shadow-xl">
-        <div className="flex  justify-between items-center p-4">
-          <Link to="/">
-            <h2 className="text-xl font-medium border border-green-600 rounded text-green-600 h-10 p-1 px-5">
-              House & Home
-            </h2>
-          </Link>
-          <div className="flex gap-3">
-            <Link to={`/houses/dashboard/${user?.id}`}>
-              <button className="bg-green-600 text-white rounded h-10 p-1 px-5">
-                Dashboard
-              </button>
-            </Link>
-            <UserButton />
-          </div>
-        </div>
-      </div>
+      <AuthenticatedNavbar />
       <div className="flex justify-center items-center my-14">
         <form
           onSubmit={handleSubmit}
           encType="multipart/form-data"
           method="post"
-          className="  rounded p-4 shadow-2xl"
+          className="rounded p-4 shadow-2xl"
         >
-          <div className="forms-con flex gap-6">
-            <div className="house-form-con border-r border-slate-100 pr-6">
+          <div className="forms-con flex flex-col md:flex-row gap-6">
+            <div className="house-form-con md:border-r border-slate-100 md:pr-6">
               <h1 className=" font-semibold border-b border-neutral-200 w-fit mb-2">
                 Listing Details
               </h1>
-              <div className="flex gap-4">
-                <div className="flex flex-col  flex-grow">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col flex-grow">
                   <label>Title:</label>
                   <input
                     type="text"
@@ -149,8 +134,8 @@ const CreateHouse = () => {
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="flex flex-col  flex-grow">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col flex-grow">
                   <label>Price:</label>
                   <input
                     type="number"
@@ -161,26 +146,29 @@ const CreateHouse = () => {
                   />
                 </div>
 
-                <div className="flex flex-col  flex-grow">
-                  <label>Offer:</label>
-                  <input
-                    type="text"
+                <div className="flex flex-col flex-grow">
+                  <label>Offer Type:</label>
+                  <select
                     name="offer"
                     value={formData.offer}
                     onChange={handleChange}
                     className="border border-slate-400 max-w-md rounded p-2"
-                  />
+                  >
+                    <option value="">Select offer type</option>
+                    <option value="Sale">Sale</option>
+                    <option value="Rent">Rent</option>
+                  </select>
                 </div>
               </div>
-              <div className="flex flex-col justify-center ">
-                <div className="flex justify-between border-b border-slate-400 py-2 mt-6">
+              <div className="flex flex-col justify-center mt-6">
+                <div className="flex justify-between border-b border-slate-400 py-2">
                   <label>Car Port:</label>
                   <input
                     type="number"
                     name="carPort"
                     value={formData.carPort}
                     onChange={handleChange}
-                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                    className="w-16 md:w-10 border border-slate-400 rounded p-0.5 text-center"
                   />
                 </div>
                 <div className=" flex justify-between border-b border-slate-400 py-2">
@@ -190,7 +178,7 @@ const CreateHouse = () => {
                     name="bedrooms"
                     value={formData.bedrooms}
                     onChange={handleChange}
-                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                    className="w-16 md:w-10 border border-slate-400 rounded p-0.5 text-center"
                   />
                 </div>
                 <div className=" flex justify-between border-b border-slate-400 py-2">
@@ -200,18 +188,18 @@ const CreateHouse = () => {
                     name="bathrooms"
                     value={formData.bathrooms}
                     onChange={handleChange}
-                    className="w-10 border-b	border-slate-400 rounded p-0.5"
+                    className="w-16 md:w-10 border border-slate-400 rounded p-0.5 text-center"
                   />
                 </div>
               </div>
-              <div className="flex flex-col my-10">
+              <div className="flex flex-col my-6 md:my-10">
                 <label>Description:</label>
                 <textarea
                   type="text"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  className="border border-slate-400 rounded p-2"
+                  className="border border-slate-400 rounded p-2 min-h-[100px]"
                 />
               </div>
               <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
@@ -272,7 +260,7 @@ const CreateHouse = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold"
+            className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold w-full md:w-auto mt-4"
           >
             Create Listing
           </button>

@@ -30,7 +30,7 @@ router.post("/upload", upload.array("files", 3), (req, res) => {
 });
 
 // Create a new house
-router.post("/", upload.array("files", 3), async (req, res) => {
+router.post("/", upload.array("files", 10), async (req, res) => {
   try {
     if (
       !req.body.userId ||
@@ -50,7 +50,7 @@ router.post("/", upload.array("files", 3), async (req, res) => {
       userId: req.body.userId,
       title: req.body.title,
       images: req.files.map((file) => file.filename),
-      price: req.body.price,
+      price: Number(req.body.price),
       location: req.body.location,
       carPort: req.body.carPort,
       bedrooms: req.body.bedrooms,
@@ -75,7 +75,9 @@ router.post("/", upload.array("files", 3), async (req, res) => {
 // Get all houses
 router.get("/", async (req, res) => {
   try {
-    const houses = await User.find({});
+    const houses = await User.find({}).sort({
+      createdAt: -1,
+    });
     return res.status(200).send({ count: houses.length, data: houses });
   } catch (error) {
     console.log(error);
@@ -87,12 +89,30 @@ router.get("/", async (req, res) => {
 router.get("/get", async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
+    const minPrice = req.query.minPrice !== "" ? Number(req.query.minPrice) : 0;
+    const maxPrice =
+      req.query.maxPrice !== ""
+        ? Number(req.query.maxPrice)
+        : Number.MAX_SAFE_INTEGER;
 
-    const listings = await User.find({
-      location: { $regex: searchTerm, $options: "i" },
+    console.log("Search params:", {
+      searchTerm,
+      minPrice,
+      maxPrice,
+      rawMinPrice: req.query.minPrice,
+      rawMaxPrice: req.query.maxPrice,
     });
-    console.log(listings);
 
+    const query = {
+      location: { $regex: searchTerm, $options: "i" },
+      price: { $gte: minPrice, $lte: maxPrice },
+    };
+
+    console.log("MongoDB query:", query);
+
+    const listings = await User.find(query);
+
+    console.log("Found listings:", listings.length);
     return res.status(200).json(listings);
   } catch (error) {
     console.log(error);
@@ -117,7 +137,9 @@ router.get("/:id", async (req, res) => {
 // Get all houses for a specific user
 router.get("/dashboard/:id", async (req, res) => {
   try {
-    const houses = await User.find({ userId: req.params.id });
+    const houses = await User.find({ userId: req.params.id }).sort({
+      createdAt: -1,
+    });
     if (houses) {
       return res.status(200).send({ count: houses.length, data: houses });
     }
@@ -146,7 +168,11 @@ router.put("/:id", async (req, res) => {
       return;
     }
     const { id } = req.params;
-    const result = await User.findByIdAndUpdate(id, req.body);
+    const updateData = {
+      ...req.body,
+      price: Number(req.body.price),
+    };
+    const result = await User.findByIdAndUpdate(id, updateData);
     if (!result) {
       return res.status(404).send({ message: "House not found" });
     }
