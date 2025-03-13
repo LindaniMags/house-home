@@ -13,6 +13,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const mongodb = process.env.mongoDBURL || mongoDBURL;
 const app = express();
 const port = process.env.PORT || PORT;
 
@@ -29,7 +30,7 @@ app.get("/", (req, res) => {
 app.use("/houses", router);
 
 mongoose
-  .connect(mongoDBURL)
+  .connect(mongodb)
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(port, () => {
