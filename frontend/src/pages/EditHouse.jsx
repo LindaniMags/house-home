@@ -189,7 +189,7 @@ const EditHouse = () => {
                   className="border border-slate-400 rounded p-2 min-h-[100px]"
                 />
               </div>
-              <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
+              {/* <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
                 <label>Upload Images:</label>
                 <input
                   type="file"
@@ -197,7 +197,7 @@ const EditHouse = () => {
                   multiple
                   onChange={handleFileChange}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="agent-form-con flex flex-col gap-6">
               <h1 className="font-semibold border-b border-neutral-200 w-fit mb-2">
