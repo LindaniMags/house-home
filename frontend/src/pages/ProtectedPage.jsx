@@ -10,7 +10,7 @@ const ProtectedPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/houses/dashboard/" + user?.id)
+      .get("https://house-home.onrender.com/houses/dashboard/" + user?.id)
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -40,7 +40,7 @@ const ProtectedPage = () => {
             <div>
               {house.images.map((image) => (
                 <img
-                  src={`http://localhost:3000/public/images/${image}`}
+                  src={`https://house-home.onrender.com/public/images/${image}`}
                   alt={house.title}
                 />
               ))}

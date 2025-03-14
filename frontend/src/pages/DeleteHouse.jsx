@@ -18,7 +18,7 @@ const DeleteHouse = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/houses/${id}`);
+      await axios.delete(`https://house-home.onrender.com/houses/${id}`);
       navigate(`/houses/dashboard/${user?.id}`);
       alert("House deleted");
     } catch (error) {

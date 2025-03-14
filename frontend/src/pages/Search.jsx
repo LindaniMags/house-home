@@ -31,7 +31,7 @@ const Search = () => {
         maxPrice: localMaxPrice,
       });
       const response = await axios.get(
-        `http://localhost:3000/houses/get?searchTerm=${localSearchTerm}&minPrice=${localMinPrice}&maxPrice=${localMaxPrice}`
+        `https://house-home.onrender.com/houses/get?searchTerm=${localSearchTerm}&minPrice=${localMinPrice}&maxPrice=${localMaxPrice}`
       );
       console.log("Response:", response.data);
       setListings(response.data);
@@ -130,7 +130,7 @@ const Search = () => {
                 </h3>
                 <div className="max-w-xs overflow-hidden shadow-lg h-56 flex items-center justify-center">
                   <img
-                    src={`http://localhost:3000/public/images/${listing.images[0]}`}
+                    src={`https://house-home.onrender.com/public/images/${listing.images[0]}`}
                     alt={listing.title}
                     className="w-full h-full object-cover"
                   />

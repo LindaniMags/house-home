@@ -18,7 +18,7 @@ const app = express();
 const port = process.env.PORT || PORT;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "https://househome.onrender.com" }));
 
 // Serve static files from the "public" directory
 app.use("/public", express.static(path.join(__dirname, "public")));

@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/houses/dashboard/" + user?.id)
+      .get("https://house-home.onrender.com/houses/dashboard/" + user?.id)
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -45,7 +45,7 @@ const Dashboard = () => {
               </h3>
               <div className="max-w-xs overflow-hidden shadow-lg h-56 flex items-center justify-center">
                 <img
-                  src={`http://localhost:3000/public/images/${house.images[0]}`}
+                  src={`https://house-home.onrender.com/public/images/${house.images[0]}`}
                   alt={house.title}
                   className="w-full h-full object-cover"
                 />

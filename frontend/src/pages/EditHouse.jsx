@@ -31,7 +31,7 @@ const EditHouse = () => {
   // Fetch house details
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/houses/${id}`)
+      .get(`https://house-home.onrender.com/houses/${id}`)
       .then((response) => {
         const house = response.data;
         setUserId(house.userId);
@@ -80,7 +80,7 @@ const EditHouse = () => {
       whatsapp,
     };
     try {
-      await axios.put(`http://localhost:3000/houses/${id}`, newHouse);
+      await axios.put(`https://house-home.onrender.com/houses/${id}`, newHouse);
       navigate(`/houses/dashboard/${user?.user.id}`);
     } catch (error) {
       alert("Error creating house");

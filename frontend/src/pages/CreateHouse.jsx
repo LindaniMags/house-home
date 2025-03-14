@@ -87,7 +87,7 @@ const CreateHouse = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/houses", data);
+      await axios.post("https://house-home.onrender.com/houses", data);
       navigate(`/houses/dashboard/${user?.user.id}`);
     } catch (error) {
       console.log(error);

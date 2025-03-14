@@ -35,7 +35,7 @@ const HouseDetails = () => {
   // fetch house details
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/houses/${id}`)
+      .get(`https://house-home.onrender.com/houses/${id}`)
       .then((response) => {
         setHouse(response.data);
         setLoading(false);
@@ -115,7 +115,7 @@ const HouseDetails = () => {
                 <img
                   src={
                     house.images && house.images.length > 0
-                      ? `http://localhost:3000/public/images/${house.images[0]}`
+                      ? `https://house-home.onrender.com/public/images/${house.images[0]}`
                       : "/images/splash.jpg"
                   }
                   alt={house.title || "House"}
@@ -134,7 +134,7 @@ const HouseDetails = () => {
                   <img
                     src={
                       house.images && house.images.length > 0
-                        ? `http://localhost:3000/public/images/${house.images[1]}`
+                        ? `https://house-home.onrender.com/public/images/${house.images[1]}`
                         : "/images/splash.jpg"
                     }
                     alt={house.title || "House"}
@@ -145,7 +145,7 @@ const HouseDetails = () => {
                   <img
                     src={
                       house.images && house.images.length > 0
-                        ? `http://localhost:3000/public/images/${house.images[2]}`
+                        ? `https://house-home.onrender.com/public/images/${house.images[2]}`
                         : "/images/splash.jpg"
                     }
                     alt={house.title || "House"}
@@ -223,7 +223,7 @@ const HouseDetails = () => {
             </button>
             <div className="relative">
               <img
-                src={`http://localhost:3000/public/images/${house.images[currentImageIndex]}`}
+                src={`https://house-home.onrender.com/public/images/${house.images[currentImageIndex]}`}
                 alt={`Photo ${currentImageIndex + 1}`}
                 className="w-full object-contain max-h-[70vh] md:max-h-[80vh]"
               />
@@ -248,7 +248,7 @@ const HouseDetails = () => {
                 house.images.map((img, index) => (
                   <img
                     key={index}
-                    src={`http://localhost:3000/public/images/${img}`}
+                    src={`https://house-home.onrender.com/public/images/${img}`}
                     alt={`Thumbnail ${index + 1}`}
                     className={`h-16 cursor-pointer ${
                       index === currentImageIndex

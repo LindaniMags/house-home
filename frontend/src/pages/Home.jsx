@@ -23,7 +23,7 @@ const Home = () => {
   // Fetch all houses
   useEffect(() => {
     axios
-      .get("http://localhost:3000/houses")
+      .get("https://house-home.onrender.com/houses")
       .then((response) => {
         setHouses(response.data.data);
       })
@@ -129,7 +129,7 @@ const Home = () => {
               </h3>
               <div className="max-w-xs overflow-hidden h-52 flex items-center justify-center">
                 <img
-                  src={`http://localhost:3000/public/images/${house.images[0]}`}
+                  src={`https://house-home.onrender.com/public/images/${house.images[0]}`}
                   alt={house.title}
                   className="w-full h-full object-cover"
                 />
