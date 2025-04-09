@@ -28,6 +28,8 @@ const userSchema = mongoose.Schema({
   bedrooms: {
     type: Number,
     required: true,
+    set: (v) => Number(v), // Ensure the value is always converted to a number when set
+    get: (v) => Number(v), // Ensure the value is always returned as a number
   },
   bathrooms: {
     type: Number,

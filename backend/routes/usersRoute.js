@@ -52,9 +52,9 @@ router.post("/", upload.array("files", 10), async (req, res) => {
       images: req.files.map((file) => file.filename),
       price: Number(req.body.price),
       location: req.body.location,
-      carPort: req.body.carPort,
-      bedrooms: req.body.bedrooms,
-      bathrooms: req.body.bathrooms,
+      carPort: Number(req.body.carPort),
+      bedrooms: Number(req.body.bedrooms),
+      bathrooms: Number(req.body.bathrooms),
       description: req.body.description,
       offer: req.body.offer,
       name: req.body.name,
@@ -89,30 +89,141 @@ router.get("/", async (req, res) => {
 router.get("/get", async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
-    const minPrice = req.query.minPrice !== "" ? Number(req.query.minPrice) : 0;
-    const maxPrice =
-      req.query.maxPrice !== ""
-        ? Number(req.query.maxPrice)
-        : Number.MAX_SAFE_INTEGER;
+
+    // Handle price parameters safely to avoid NaN
+    let minPrice = 0;
+    let maxPrice = Number.MAX_SAFE_INTEGER;
+
+    try {
+      if (req.query.minPrice && req.query.minPrice !== "") {
+        const parsedMinPrice = Number(req.query.minPrice);
+        if (!isNaN(parsedMinPrice)) {
+          minPrice = parsedMinPrice;
+        }
+      }
+
+      if (req.query.maxPrice && req.query.maxPrice !== "") {
+        const parsedMaxPrice = Number(req.query.maxPrice);
+        if (!isNaN(parsedMaxPrice)) {
+          maxPrice = parsedMaxPrice;
+        }
+      }
+    } catch (err) {
+      console.log("Error parsing price parameters:", err.message);
+    }
+    // Parse bedrooms value, ensuring it's a number or null
+    let bedrooms = null;
+    try {
+      if (req.query.bedrooms && req.query.bedrooms !== "") {
+        const parsedBedrooms = parseInt(req.query.bedrooms, 10);
+        if (!isNaN(parsedBedrooms)) {
+          bedrooms = parsedBedrooms;
+          console.log(
+            "Parsed bedrooms from query:",
+            req.query.bedrooms,
+            "to number:",
+            bedrooms
+          );
+        } else {
+          console.log("Invalid bedroom value (NaN):", req.query.bedrooms);
+        }
+      }
+    } catch (err) {
+      console.log("Error parsing bedroom parameter:", err.message);
+    }
 
     console.log("Search params:", {
       searchTerm,
       minPrice,
       maxPrice,
+      bedrooms,
       rawMinPrice: req.query.minPrice,
       rawMaxPrice: req.query.maxPrice,
+      rawBedrooms: req.query.bedrooms,
+      bedroomsType: bedrooms !== null ? typeof bedrooms : "null",
     });
 
+    // Start with base query
     const query = {
       location: { $regex: searchTerm, $options: "i" },
-      price: { $gte: minPrice, $lte: maxPrice },
     };
 
-    console.log("MongoDB query:", query);
+    // Add price filter if valid
+    if (!isNaN(minPrice) || !isNaN(maxPrice)) {
+      query.price = {};
 
+      if (!isNaN(minPrice)) {
+        query.price.$gte = minPrice;
+      }
+
+      if (!isNaN(maxPrice)) {
+        query.price.$lte = maxPrice;
+      }
+    }
+
+    // Add bedrooms filter if specified - using a simpler approach
+    if (bedrooms !== null) {
+      console.log("Bedrooms value type:", typeof bedrooms, "Value:", bedrooms);
+
+      try {
+        // Simpler approach: just use the numeric value for filtering
+        if (bedrooms === 5) {
+          // For 5+ bedrooms, use $gte operator
+          query.bedrooms = { $gte: 5 };
+          console.log("Using $gte query for 5+ bedrooms");
+        } else {
+          // For other bedroom counts, use exact match
+          query.bedrooms = Number(bedrooms);
+          console.log("Using exact match for bedrooms:", Number(bedrooms));
+        }
+      } catch (err) {
+        // If there's an error with the bedroom filter, log it but don't apply the filter
+        console.log("Error applying bedroom filter:", err.message);
+        // Remove any partial bedroom filter that might have been applied
+        delete query.bedrooms;
+      }
+
+      // Log all unique bedroom values in the database
+      const uniqueBedrooms = await User.distinct("bedrooms");
+      console.log("All unique bedroom values in DB:", uniqueBedrooms);
+
+      // Log a sample query to verify
+      const testQuery =
+        bedrooms === 5
+          ? { bedrooms: { $gte: 5 } }
+          : { bedrooms: Number(bedrooms) };
+      console.log("Test query:", JSON.stringify(testQuery));
+      const sampleCount = await User.countDocuments(testQuery);
+      console.log("Sample count for bedrooms query:", sampleCount);
+    }
+
+    console.log("MongoDB query:", JSON.stringify(query, null, 2));
+
+    // Check if there are any houses in the database at all
+    const totalCount = await User.countDocuments({});
+    console.log("Total houses in database:", totalCount);
+
+    // Check if there are any houses with bedrooms
+    if (bedrooms !== null) {
+      const anyBedroomsCount = await User.countDocuments({
+        bedrooms: { $exists: true },
+      });
+      console.log("Houses with bedrooms field:", anyBedroomsCount);
+    }
+
+    // Execute the query
     const listings = await User.find(query);
 
     console.log("Found listings:", listings.length);
+
+    // If no results, log a sample of houses to understand the data
+    if (listings.length === 0 && bedrooms !== null) {
+      const sampleHouses = await User.find({}).limit(3).select("bedrooms");
+      console.log(
+        "Sample houses bedrooms values:",
+        sampleHouses.map((h) => h.bedrooms)
+      );
+    }
     return res.status(200).json(listings);
   } catch (error) {
     console.log(error);
@@ -129,8 +240,13 @@ router.get("/:id", async (req, res) => {
     }
     return res.status(404).send({ message: "House not found" });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: error.message });
+    console.log("Error in /houses/get route:", error);
+    // Send more detailed error information
+    res.status(500).send({
+      message: error.message,
+      stack: process.env.NODE_ENV === "production" ? null : error.stack,
+      query: req.query,
+    });
   }
 });
 
@@ -145,8 +261,13 @@ router.get("/dashboard/:id", async (req, res) => {
     }
     return res.status(404).send({ message: "House not found" });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: error.message });
+    console.log("Error in /dashboard/:id route:", error);
+    // Send more detailed error information
+    res.status(500).send({
+      message: error.message,
+      stack: process.env.NODE_ENV === "production" ? null : error.stack,
+      id: req.params.id,
+    });
   }
 });
 
@@ -171,6 +292,9 @@ router.put("/:id", async (req, res) => {
     const updateData = {
       ...req.body,
       price: Number(req.body.price),
+      bedrooms: Number(req.body.bedrooms),
+      bathrooms: Number(req.body.bathrooms),
+      carPort: Number(req.body.carPort),
     };
     const result = await User.findByIdAndUpdate(id, updateData);
     if (!result) {

@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Link } from "react-router";
 import { useUser } from "@clerk/clerk-react";
 import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 
@@ -12,6 +11,7 @@ import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 const CreateHouse = () => {
   const user = useUser();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -64,6 +64,7 @@ const CreateHouse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const data = new FormData();
 
     data.append("title", formData.title);
@@ -88,9 +89,17 @@ const CreateHouse = () => {
 
     try {
       await axios.post("https://house-home.onrender.com/houses", data);
+      // await axios.post("http://localhost:5555/houses", data); // Use this for local development
       navigate(`/houses/dashboard/${user?.user.id}`);
     } catch (error) {
-      console.log(error);
+      console.error("Error creating listing:", error);
+      alert(
+        `Error creating listing: ${
+          error.response?.data?.message || error.message
+        }. Please try again.`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -260,9 +269,14 @@ const CreateHouse = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold w-full md:w-auto mt-4"
+            disabled={isSubmitting}
+            className={`text-white rounded h-10 p-1 px-5 w-full md:w-auto mt-4 ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-800 hover:font-semibold"
+            }`}
           >
-            Create Listing
+            {isSubmitting ? "Creating Listing..." : "Create Listing"}
           </button>
         </form>
       </div>

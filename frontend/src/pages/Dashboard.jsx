@@ -28,6 +28,11 @@ const Dashboard = () => {
     <div>
       <AuthenticatedNavbar showCreateListing={true} />
       <h1 className="ml-2 text-lg font-medium my-3">My Dashboard</h1>
+      <Link to="/houses/create" className="block md:hidden">
+        <button className="fixed bottom-6 right-6 w-14 h-14 bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-green-700 z-50">
+          +
+        </button>
+      </Link>
       <div className="flex flex-wrap">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (

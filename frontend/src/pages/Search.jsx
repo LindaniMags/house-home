@@ -17,41 +17,96 @@ const Search = () => {
   const searchTerm = searchParams.get("searchTerm") || "";
   const minPrice = searchParams.get("minPrice") || "";
   const maxPrice = searchParams.get("maxPrice") || "";
+  const bedrooms = searchParams.get("bedrooms") || "";
 
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
   const [localMinPrice, setLocalMinPrice] = useState(minPrice);
   const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
+  const [localBedrooms, setLocalBedrooms] = useState(bedrooms);
+
+  const [error, setError] = useState(null);
 
   const fetchListings = async () => {
     setLoading(true);
+    setError(null);
     try {
       console.log("Fetching with params:", {
         searchTerm: localSearchTerm,
         minPrice: localMinPrice,
         maxPrice: localMaxPrice,
+        bedrooms: localBedrooms,
       });
-      const response = await axios.get(
-        `https://house-home.onrender.com/houses/get?searchTerm=${localSearchTerm}&minPrice=${localMinPrice}&maxPrice=${localMaxPrice}`
-      );
-      console.log("Response:", response.data);
-      setListings(response.data);
+
+      // Build URL with query parameters
+      // Use the appropriate base URL
+      const baseUrl = "https://house-home.onrender.com";
+      // const baseUrl = "http://localhost:5555"; // Uncomment for local testing
+
+      let url = `${baseUrl}/houses/get?searchTerm=${encodeURIComponent(
+        localSearchTerm || ""
+      )}`;
+
+      // Add price filters if provided
+      if (localMinPrice)
+        url += `&minPrice=${encodeURIComponent(localMinPrice)}`;
+      if (localMaxPrice)
+        url += `&maxPrice=${encodeURIComponent(localMaxPrice)}`;
+
+      // Add bedrooms filter if provided
+      if (localBedrooms)
+        url += `&bedrooms=${encodeURIComponent(localBedrooms)}`;
+
+      console.log("Request URL:", url);
+
+      try {
+        const response = await axios.get(url);
+        console.log("Response:", response.data);
+
+        if (Array.isArray(response.data)) {
+          setListings(response.data);
+        } else {
+          console.error("Unexpected response format:", response.data);
+          setError("Received invalid data format from server");
+          setListings([]);
+        }
+      } catch (axiosError) {
+        console.error(
+          "Axios error:",
+          axiosError.response?.data || axiosError.message
+        );
+        throw axiosError; // Re-throw to be caught by the outer catch block
+      }
     } catch (error) {
-      console.log("Error:", error);
+      console.log("Error fetching listings:", error);
+      setError(error.message || "Failed to fetch listings");
+      setListings([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
+    // Fetch listings when the component mounts or when URL parameters change
     fetchListings();
-  }, []);
+  }, [searchTerm, minPrice, maxPrice, bedrooms]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    console.log("Search form submitted with bedrooms:", localBedrooms);
+
+    // Create new search parameters
     const newSearchParams = new URLSearchParams();
+
+    // Only add parameters that have values
     if (localSearchTerm) newSearchParams.set("searchTerm", localSearchTerm);
     if (localMinPrice) newSearchParams.set("minPrice", localMinPrice);
     if (localMaxPrice) newSearchParams.set("maxPrice", localMaxPrice);
+    if (localBedrooms) newSearchParams.set("bedrooms", localBedrooms);
+
+    // Update URL with new search parameters
     setSearchParams(newSearchParams);
+
+    // Fetch listings with the new parameters
     fetchListings();
   };
 
@@ -94,6 +149,21 @@ const Search = () => {
             }}
             className="border p-2 rounded w-32"
           />
+          <select
+            value={localBedrooms}
+            onChange={(e) => {
+              console.log("Bedroom selection changed to:", e.target.value);
+              setLocalBedrooms(e.target.value);
+            }}
+            className="border p-2 rounded w-40 bg-white cursor-pointer h-10"
+          >
+            <option value="">Any Bedrooms</option>
+            <option value="1">1 Bedroom</option>
+            <option value="2">2 Bedrooms</option>
+            <option value="3">3 Bedrooms</option>
+            <option value="4">4 Bedrooms</option>
+            <option value="5">5+ Bedrooms</option>
+          </select>
           <button
             type="submit"
             className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800"
@@ -103,15 +173,44 @@ const Search = () => {
         </form>
       </div>
       <div className="flex flex-wrap justify-center">
+        {error && (
+          <div className="text-center w-full p-4 bg-red-100 border border-red-300 rounded mb-4">
+            <p className="text-red-700">Error: {error}</p>
+            <p className="text-red-600 mt-2">
+              Please try again or contact support if the problem persists.
+            </p>
+          </div>
+        )}
+
         {loading ? (
-          <p>Loading...</p>
-        ) : !searchTerm && !minPrice && !maxPrice ? (
+          <p className="text-center w-full p-4">Loading...</p>
+        ) : !searchTerm && !minPrice && !maxPrice && !bedrooms ? (
           <div className="text-center w-full p-4">
             <p className="text-xl text-gray-600">Enter search criteria</p>
           </div>
         ) : listings.length === 0 ? (
           <div className="text-center w-full p-4">
             <p className="text-xl text-gray-600">No Items Found</p>
+            <p className="text-gray-500 mt-2">
+              Search criteria:
+              {searchTerm ? `Location: "${searchTerm}"` : ""}
+              {minPrice ? `, Min Price: ${minPrice}` : ""}
+              {maxPrice ? `, Max Price: ${maxPrice}` : ""}
+              {bedrooms
+                ? `, Bedrooms: ${bedrooms === "5" ? "5+" : bedrooms}`
+                : ""}
+            </p>
+            <p className="text-gray-500 mt-2">
+              Try adjusting your search criteria.
+            </p>
+            <div className="mt-4 p-3 bg-gray-100 rounded text-left">
+              <p className="font-medium">Debug Information:</p>
+              <p className="text-sm">
+                URL Parameters: {window.location.search}
+              </p>
+              <p className="text-sm">Local Bedrooms Value: {localBedrooms}</p>
+              <p className="text-sm">Bedrooms Parameter: {bedrooms}</p>
+            </div>
           </div>
         ) : (
           <div className="flex flex-wrap mb-28 justify-center">

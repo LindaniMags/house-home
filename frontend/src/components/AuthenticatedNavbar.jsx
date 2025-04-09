@@ -23,13 +23,13 @@ const AuthenticatedNavbar = ({ showCreateListing = false }) => {
               <>
                 {showCreateListing ? (
                   <Link to="/houses/create">
-                    <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
+                    <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-md ">
                       Create Listing
                     </button>
                   </Link>
                 ) : (
                   <Link to={`/houses/dashboard/${user?.id}`}>
-                    <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold">
+                    <button className="bg-green-600 text-white rounded h-10 p-1 px-5 hover:bg-green-800 hover:font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
                       Dashboard
                     </button>
                   </Link>
@@ -56,13 +56,13 @@ const AuthenticatedNavbar = ({ showCreateListing = false }) => {
                 <>
                   {showCreateListing ? (
                     <Link to="/houses/create">
-                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                      <button className="w-full text-left px-4 py-2 hover:bg-green-50 text-green-600 font-medium transition duration-200 ease-in-out border-b border-green-600">
                         Create Listing
                       </button>
                     </Link>
                   ) : (
                     <Link to={`/houses/dashboard/${user?.id}`}>
-                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                      <button className="w-full text-left px-4 py-2 hover:bg-green-50 text-green-600 font-medium transition duration-200 ease-in-out border-b border-green-600">
                         Dashboard
                       </button>
                     </Link>

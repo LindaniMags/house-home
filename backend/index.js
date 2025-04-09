@@ -19,27 +19,30 @@ const port = process.env.PORT || PORT;
 
 app.use(express.json());
 
-// app.use(cors());
+// DEV MODE
+app.use(cors());
 
-const allowedOrigins = [
-  "https://www.househome.me",
-  "https://househome.me",
-  "https://househome.onrender.com", // render's default dev server port
-  "http://localhost:5173", // In case you use React's default port
-];
+//PRODUCTION
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+// const allowedOrigins = [
+//   "https://www.househome.me",
+//   "https://househome.me",
+//   "https://househome.onrender.com", // render's default dev server port
+//   "http://localhost:5173", // In case you use React's default port
+// ];
+
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 // Serve static files from the "public" directory
 app.use("/public", express.static(path.join(__dirname, "public")));
