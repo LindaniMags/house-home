@@ -263,10 +263,6 @@ const Search = () => {
           </div>
         )}
       </div>
-
-      <div className="w-full bottom-0 fixed">
-        <Footer />
-      </div>
     </div>
   );
 };
