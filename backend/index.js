@@ -19,7 +19,7 @@ const port = process.env.PORT || PORT;
 
 app.use(express.json());
 
-// app.use(cors({ origin: "https://www.househome.me" }));
+app.use(cors());
 
 const allowedOrigins = [
   "https://www.househome.me",
@@ -27,18 +27,18 @@ const allowedOrigins = [
   "http://localhost:5173", // In case you use React's default port
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 // Serve static files from the "public" directory
 app.use("/public", express.static(path.join(__dirname, "public")));
