@@ -40,7 +40,7 @@ const ProtectedPage = () => {
             <div>
               {house.images.map((image) => (
                 <img
-                  src={`https://house-home.onrender.com/public/images/${image}`}
+                  src={image} // Use Cloudinary URL directly
                   alt={house.title}
                 />
               ))}

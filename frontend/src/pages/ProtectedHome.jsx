@@ -125,7 +125,11 @@ const Home = () => {
               </h3>
               <div className="max-w-xs overflow-hidden h-52 flex items-center justify-center">
                 <img
-                  src={`https://house-home.onrender.com/public/images/${house.images[0]}`}
+                  src={
+                    house.images && house.images.length > 0
+                      ? house.images[0]
+                      : "/images/splash.jpg"
+                  }
                   alt={house.title}
                   className="w-full h-full object-cover"
                 />

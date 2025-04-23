@@ -229,7 +229,11 @@ const Search = () => {
                 </h3>
                 <div className="max-w-xs overflow-hidden shadow-lg h-56 flex items-center justify-center">
                   <img
-                    src={`https://house-home.onrender.com/public/images/${listing.images[0]}`}
+                    src={
+                      listing.images && listing.images.length > 0
+                        ? listing.images[0]
+                        : "/images/splash.jpg"
+                    }
                     alt={listing.title}
                     className="w-full h-full object-cover"
                   />

@@ -115,7 +115,7 @@ const HouseDetails = () => {
                 <img
                   src={
                     house.images && house.images.length > 0
-                      ? `https://house-home.onrender.com/public/images/${house.images[0]}`
+                      ? house.images[0] // Use Cloudinary URL directly
                       : "/images/splash.jpg"
                   }
                   alt={house.title || "House"}
@@ -133,8 +133,8 @@ const HouseDetails = () => {
                 <div className="flex justify-center items-center max-h-80 overflow-hidden">
                   <img
                     src={
-                      house.images && house.images.length > 0
-                        ? `https://house-home.onrender.com/public/images/${house.images[1]}`
+                      house.images && house.images.length > 1
+                        ? house.images[1] // Use Cloudinary URL directly
                         : "/images/splash.jpg"
                     }
                     alt={house.title || "House"}
@@ -144,8 +144,8 @@ const HouseDetails = () => {
                 <div className="flex justify-center items-center max-h-80 overflow-hidden">
                   <img
                     src={
-                      house.images && house.images.length > 0
-                        ? `https://house-home.onrender.com/public/images/${house.images[2]}`
+                      house.images && house.images.length > 2
+                        ? house.images[2] // Use Cloudinary URL directly
                         : "/images/splash.jpg"
                     }
                     alt={house.title || "House"}
@@ -223,7 +223,7 @@ const HouseDetails = () => {
             </button>
             <div className="relative">
               <img
-                src={`https://house-home.onrender.com/public/images/${house.images[currentImageIndex]}`}
+                src={house.images[currentImageIndex]}
                 alt={`Photo ${currentImageIndex + 1}`}
                 className="w-full object-contain max-h-[70vh] md:max-h-[80vh]"
               />
@@ -248,7 +248,7 @@ const HouseDetails = () => {
                 house.images.map((img, index) => (
                   <img
                     key={index}
-                    src={`https://house-home.onrender.com/public/images/${img}`}
+                    src={img} // Use Cloudinary URL directly
                     alt={`Thumbnail ${index + 1}`}
                     className={`h-16 cursor-pointer ${
                       index === currentImageIndex

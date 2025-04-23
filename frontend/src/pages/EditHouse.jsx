@@ -55,35 +55,77 @@ const EditHouse = () => {
       });
   }, []);
 
+  // State for file uploads
+  const [files, setFiles] = useState([]);
+
   // Update house details
   const handleFileChange = (e) => {
-    setFormData({ ...formData, files: e.target.files });
+    setFiles(e.target.files);
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newHouse = {
-      title,
-      userId,
-      price,
-      location,
-      carPort,
-      bedrooms,
-      bathrooms,
-      description,
-      offer,
-      name,
-      company,
-      email,
-      phone,
-      whatsapp,
-    };
+
+    // Use FormData to handle file uploads
+    const formData = new FormData();
+
+    // Add all text fields
+    formData.append("title", title);
+    formData.append("userId", userId);
+    formData.append("price", price);
+    formData.append("location", location);
+    formData.append("carPort", carPort);
+    formData.append("bedrooms", bedrooms);
+    formData.append("bathrooms", bathrooms);
+    formData.append("description", description);
+    formData.append("offer", offer);
+    formData.append("name", name);
+    formData.append("company", company);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("whatsapp", whatsapp);
+
+    // Add files if any
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+    }
+
     try {
-      await axios.put(`https://house-home.onrender.com/houses/${id}`, newHouse);
+      // If we have files, use a different endpoint that handles file uploads
+      if (files && files.length > 0) {
+        await axios.put(
+          `https://house-home.onrender.com/houses/update-with-images/${id}`,
+          formData
+        );
+      } else {
+        // Otherwise use the regular update endpoint
+        const newHouse = {
+          title,
+          userId,
+          price,
+          location,
+          carPort,
+          bedrooms,
+          bathrooms,
+          description,
+          offer,
+          name,
+          company,
+          email,
+          phone,
+          whatsapp,
+        };
+        await axios.put(
+          `https://house-home.onrender.com/houses/${id}`,
+          newHouse
+        );
+      }
       navigate(`/houses/dashboard/${user?.user.id}`);
     } catch (error) {
-      alert("Error creating house");
+      alert("Error updating house");
       console.log(error);
     }
   };
@@ -189,15 +231,18 @@ const EditHouse = () => {
                   className="border border-slate-400 rounded p-2 min-h-[100px]"
                 />
               </div>
-              {/* <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
-                <label>Upload Images:</label>
+              <div className="border-b border-slate-400 py-2 mb-4 flex flex-col">
+                <label>Upload New Images:</label>
                 <input
                   type="file"
                   name="files"
                   multiple
                   onChange={handleFileChange}
                 />
-              </div> */}
+                <p className="text-sm text-gray-500 mt-1">
+                  Leave empty to keep existing images
+                </p>
+              </div>
             </div>
             <div className="agent-form-con flex flex-col gap-6">
               <h1 className="font-semibold border-b border-neutral-200 w-fit mb-2">
