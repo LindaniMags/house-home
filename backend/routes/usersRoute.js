@@ -2,28 +2,17 @@ import express from "express";
 import { User } from "../models/userModel.js";
 import multer from "multer";
 import path from "path";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  // This function is is used to specify the
-  // folder where Multer will store the uploaded file.
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-
-  /**
-   * This function is used to specify the
-   * filename of the uploaded file. The filename is a combination of the fieldname
-   */
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    );
+// Configure multer to store files in memory instead of disk
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // limit file size to 5MB
   },
 });
-const upload = multer({ storage });
 
 router.post("/upload", upload.array("files", 3), (req, res) => {
   console.log(req.file);
@@ -46,10 +35,25 @@ router.post("/", upload.array("files", 10), async (req, res) => {
       res.status(400).send({ message: "All fields are required" });
       return;
     }
+
+    // Upload images to Cloudinary
+    const imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        try {
+          const result = await uploadToCloudinary(file);
+          imageUrls.push(result.url);
+        } catch (uploadError) {
+          console.error("Error uploading to Cloudinary:", uploadError);
+          // Continue with other images even if one fails
+        }
+      }
+    }
+
     const newHouse = {
       userId: req.body.userId,
       title: req.body.title,
-      images: req.files.map((file) => file.filename),
+      images: imageUrls, // Store Cloudinary URLs instead of filenames
       price: Number(req.body.price),
       location: req.body.location,
       carPort: Number(req.body.carPort),
@@ -64,7 +68,7 @@ router.post("/", upload.array("files", 10), async (req, res) => {
       whatsapp: req.body.whatsapp,
     };
     const house = await User.create(newHouse);
-    console.log(req.files);
+    console.log("Uploaded images:", imageUrls);
     return res.status(201).send(house);
   } catch (error) {
     console.log(error);
@@ -271,7 +275,7 @@ router.get("/dashboard/:id", async (req, res) => {
   }
 });
 
-// Update a house by ID
+// Update a house by ID (without images)
 router.put("/:id", async (req, res) => {
   try {
     if (
@@ -306,6 +310,73 @@ router.put("/:id", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
+// Update a house with new images
+router.put(
+  "/update-with-images/:id",
+  upload.array("files", 10),
+  async (req, res) => {
+    try {
+      if (
+        !req.body.userId ||
+        !req.body.title ||
+        !req.body.price ||
+        !req.body.location ||
+        !req.body.carPort ||
+        !req.body.bedrooms ||
+        !req.body.bathrooms ||
+        !req.body.description ||
+        !req.body.offer
+      ) {
+        res.status(400).send({ message: "All fields are required" });
+        return;
+      }
+
+      const { id } = req.params;
+
+      // Upload new images to Cloudinary
+      const imageUrls = [];
+      if (req.files && req.files.length > 0) {
+        for (const file of req.files) {
+          try {
+            const result = await uploadToCloudinary(file);
+            imageUrls.push(result.url);
+          } catch (uploadError) {
+            console.error("Error uploading to Cloudinary:", uploadError);
+            // Continue with other images even if one fails
+          }
+        }
+      }
+
+      // Prepare update data
+      const updateData = {
+        ...req.body,
+        price: Number(req.body.price),
+        bedrooms: Number(req.body.bedrooms),
+        bathrooms: Number(req.body.bathrooms),
+        carPort: Number(req.body.carPort),
+      };
+
+      // Only update images if new ones were uploaded
+      if (imageUrls.length > 0) {
+        updateData.images = imageUrls;
+      }
+
+      const result = await User.findByIdAndUpdate(id, updateData);
+      if (!result) {
+        return res.status(404).send({ message: "House not found" });
+      }
+
+      return res.status(200).send({
+        message: "House updated successfully",
+        imageUrls: imageUrls.length > 0 ? imageUrls : null,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: error.message });
+    }
+  }
+);
 
 // Delete a house by ID
 router.delete("/:id", async (req, res) => {
